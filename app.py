@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest, UnsupportedMediaType
+from lxml import etree
 
 app = Flask(__name__)
 
@@ -11,6 +12,20 @@ def receive_data():
 
     payload = request.get_json()
     return jsonify({"status": "received", "data": payload}), 200
+
+
+@app.route("/xml", methods=["POST"])
+def receive_xml():
+    if request.content_type != "application/xml":
+        raise UnsupportedMediaType("Content-Type must be application/xml")
+
+    parser = etree.XMLParser(resolve_entities=False, no_network=True)
+    try:
+        root = etree.fromstring(request.data, parser)
+    except etree.XMLSyntaxError as e:
+        raise BadRequest(f"Invalid XML: {e}")
+
+    return jsonify({"status": "received", "root_tag": root.tag}), 200
 
 
 if __name__ == "__main__":
