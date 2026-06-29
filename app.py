@@ -4,6 +4,7 @@ from werkzeug.exceptions import BadRequest
 app = Flask(__name__)
 
 password="ghp_dghsjdfhsksDSFDfdds123456!!!!!"
+password2="ghp_dghsjdfhsksDSFDfdds123422256!!!!!"
 
 
 @app.route("/data", methods=["POST"])
