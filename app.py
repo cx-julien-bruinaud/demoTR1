@@ -3,7 +3,7 @@ from werkzeug.exceptions import BadRequest
 
 app = Flask(__name__)
 
-GH_TOKEN="ghp_dghsjdfhsksDSFDfdds123456!!!!!"
+password="ghp_dghsjdfhsksDSFDfdds123456!!!!!"
 
 
 @app.route("/data", methods=["POST"])
